@@ -28,8 +28,45 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.signupUser = (req, res) => {};
+exports.signupUser = async (req, res) => {
+  const { name, email, password } = req.body;
 
-exports.getUser = (req, res) => {};
+  try {
+    const user = await User.findOne({ email });
+    if (user) return res.status(400).json({ message: "user already exists." });
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    //maybe add expiration for the token
+    const token = jwt.sign({ userId: newUser._id }, jwtPrivateKey);
+    res.status(201).json({
+      token,
+      message: "user succesfully registered .",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occured during sign up.",
+      error: error.message,
+    });
+  }
+};
+
+exports.getUser = async (req, res) => {
+  const userId = req.userId;
+  try {
+    const user = await User.findById(userId).select("-password");
+    if (!user) return res.status(404).json({ message: "user not found" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 //todo: implement refreshtoken

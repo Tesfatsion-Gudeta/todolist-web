@@ -10,7 +10,7 @@ const authMiddleware = (req, res, next) => {
       .json({ message: "no token provided, authorization denied." });
   try {
     const decoded = jwt.verify(token, jwtPrivateKey);
-    req.userId = decoded;
+    req.userId = decoded.userId;
     next();
   } catch (error) {
     res.status(400).json({ message: "invalid token" });
