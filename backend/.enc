@@ -1,0 +1,3 @@
+MONGODB_URL=mongodb+srv://tesfa:<db_password>@cluster0.silgs.mongodb.net/todos
+PORT=5000
+JWTPRIVATEKEY=myprivatekey

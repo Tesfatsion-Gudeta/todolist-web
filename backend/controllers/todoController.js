@@ -7,3 +7,5 @@ exports.postTodo = async (req, res) => {};
 exports.updateTodo = async (req, res) => {};
 
 exports.deleteTodo = async (req, res) => {};
+
+exports.getTodo = async (req, res) => {};
