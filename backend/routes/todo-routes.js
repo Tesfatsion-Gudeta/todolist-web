@@ -24,4 +24,4 @@ router.put("/:id", authMiddleware, updateTodo);
 //delete todo
 router.delete("/:id", authMiddleware, deleteTodo);
 
-module.exports = todos;
+module.exports = router;

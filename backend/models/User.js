@@ -17,7 +17,7 @@ module.exports = mongoose.model(
         lowercase: true,
       },
       password: {
-        type: true,
+        type: String,
         required: true,
       },
     },

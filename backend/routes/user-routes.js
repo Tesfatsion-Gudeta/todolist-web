@@ -4,13 +4,16 @@ const {
   signupUser,
   getUser,
 } = require("../controllers/userController");
+const authMiddleware = require("../middlewares/auth-middleware");
 const router = exporess.Router();
 
 //login
-router.post("/", loginUser);
+router.post("/login", loginUser);
 
 //signup
-router.post("/", signupUser);
+router.post("/signup", signupUser);
 
 //me
-router.get("/:id", getUser);
+router.get("/me", authMiddleware, getUser);
+
+module.exports = router;
