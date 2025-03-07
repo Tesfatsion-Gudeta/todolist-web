@@ -8,7 +8,7 @@ const Home = () => {
       <div className="font-poppins text-4xl font-bold">
         GET YOU TASKS ORGANISED WITH A SIMPLE TODOS WEB APP!
       </div>
-      <Link to="/todos">
+      <Link to="/Login">
         <Button size="lg" className="text-2xl cursor-pointer">
           login
         </Button>
