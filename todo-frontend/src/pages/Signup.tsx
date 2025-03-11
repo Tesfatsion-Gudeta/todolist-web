@@ -17,17 +17,19 @@ import { Input } from "@/components/ui/input";
 
 // Define schema using Zod
 const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Invalid email address." }),
   password: z
     .string()
     .min(4, { message: "Password must be at least 4 characters." }),
 });
 
-export function Login() {
+export function SignUp() {
   // Setup React Hook Form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -40,15 +42,11 @@ export function Login() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setErrorMessage(null);
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/user/login",
-        data
-      );
-      localStorage.setItem("token", res.data.token);
-      navigate("/Todos"); // Redirect to dashboard on success
+      await axios.post("http://localhost:5000/api/user/signup", data);
+      navigate("/login"); // Redirect to login page on success
     } catch (err: any) {
       setErrorMessage(
-        err.response?.data?.message || "Login failed. Please try again."
+        err.response?.data?.message || "Sign up failed. Please try again."
       );
     }
   };
@@ -56,14 +54,35 @@ export function Login() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-center text-2xl font-bold mb-4">Login</h2>
+        <h2 className="text-center text-2xl font-bold mb-4">Sign Up</h2>
         {errorMessage && (
           <p className="text-red-500 text-sm text-center mb-2">
             {errorMessage}
           </p>
         )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 font-sans"
+          >
+            {/* Name Field */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter your name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             {/* Email Field */}
             <FormField
               control={form.control}
@@ -101,7 +120,7 @@ export function Login() {
               )}
             />
             <Button type="submit" className="w-full">
-              Login
+              Sign Up
             </Button>
           </form>
         </Form>

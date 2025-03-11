@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -8,9 +7,9 @@ const Home = () => {
       <div className="font-poppins text-4xl font-bold">
         GET YOU TASKS ORGANISED WITH A SIMPLE TODOS WEB APP!
       </div>
-      <Link to="/Login">
+      <Link to="/Signup">
         <Button size="lg" className="text-2xl cursor-pointer">
-          login
+          Signup
         </Button>
       </Link>
     </div>
