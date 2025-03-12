@@ -7,10 +7,6 @@
   font-style: normal;
 }
 
-body {
-  font-family: "poppins", sans-serif; /* Apply the font globally */
-}
-
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
@@ -140,8 +136,4 @@ body {
     format("truetype"); /* Adjust path */
   font-weight: normal;
   font-style: normal;
-}
-
-body {
-  font-family: "poppins", sans-serif; /* Apply the font globally */
 }

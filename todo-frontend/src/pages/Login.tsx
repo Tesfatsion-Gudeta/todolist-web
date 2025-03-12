@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
@@ -105,6 +105,14 @@ export function Login() {
             </Button>
           </form>
         </Form>
+        <div className="p-2">
+          <span>
+            Don't have an account?
+            <Link to="/SignUp" className="text-blue-600 pl-1.5">
+              Sign Up
+            </Link>
+          </span>
+        </div>
       </div>
     </div>
   );
