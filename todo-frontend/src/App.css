@@ -137,3 +137,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
+body {
+  font-family: "poppins", sans-serif; /* Apply the font globally */
+}

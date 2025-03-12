@@ -54,7 +54,7 @@ export function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 font-sans">
       <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-center text-2xl font-bold mb-4">Login</h2>
         {errorMessage && (

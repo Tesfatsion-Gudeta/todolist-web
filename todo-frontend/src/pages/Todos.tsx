@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 
 const Todos = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col font-sans">
       <NavBar />
       <div className="p-4">
         <Button className="rounded-xl">
