@@ -17,6 +17,10 @@ exports.postTodo = async (req, res) => {
     const { title } = req.body;
     const userId = req.userId;
 
+    if (!title) {
+      return res.status(400).json({ message: "Todo text is required" });
+    }
+
     const todo = await Todo.create({ title, userId });
     res.json({ message: "todo successfully created.", todo });
   } catch (error) {
