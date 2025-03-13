@@ -6,6 +6,10 @@ const todoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isCompleted: {
+      type: Boolean,
+      default: true,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId, //foriegn key
       ref: "User",
