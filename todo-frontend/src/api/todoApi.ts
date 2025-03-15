@@ -8,7 +8,7 @@ export const getTodos = async () => {
   const { data } = await axiosInstance.get<Todo[]>(API_URL);
   return data;
 };
-export const addTodo = async (title: string) => {
+export const addTodo = async ({ title }: { title: string }) => {
   const { data } = await axiosInstance.post<Todo>(API_URL, { title });
   return data;
 };

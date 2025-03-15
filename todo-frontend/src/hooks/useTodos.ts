@@ -12,3 +12,18 @@ export const useTodos = () => {
 //     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
 //   });
 // };
+
+// Add Todo Mutation
+export const useAddTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Todo, Error, { title: string }>({
+    mutationFn: addTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.error("Error adding todo:", error);
+    },
+  });
+};

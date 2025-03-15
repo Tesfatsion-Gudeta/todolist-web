@@ -1,26 +1,17 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useQueryClient } from "@tanstack/react-query";
-import { addTodo, updateTodo } from "@/api/todoApi"; // Assuming you have the updateTodo API function
-import { useForm, Controller } from "react-hook-form"; // Import useForm and Controller from react-hook-form
+import { useAddTodo } from "@/hooks/useTodos"; // Assuming these hooks are available
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form"; // Import useForm and Controller from react-hook-form
 
-interface TodoInputProps {
-  existingTodo?: { _id: string; title: string }; // Optional prop for existing todo, used in update mode
-}
-
-const TodoInput = ({ existingTodo }: TodoInputProps) => {
-  const { control, handleSubmit, setValue, reset } = useForm<{
+const TodoInput = () => {
+  const { control, handleSubmit, reset } = useForm<{
     todoTitle: string;
   }>(); // Initialize react-hook-form
   const [error, setError] = useState<string | null>(null);
-  const queryClient = useQueryClient(); // React Query hook to refetch todos after adding or updating one
 
-  useEffect(() => {
-    if (existingTodo) {
-      setValue("todoTitle", existingTodo.title); // Set the form value to the existing todo's title
-    }
-  }, [existingTodo, setValue]);
+  // Custom hooks for adding and updating todos
+  const { mutate: addTodoMutation } = useAddTodo();
 
   const onSubmit = async (data: { todoTitle: string }) => {
     const { todoTitle } = data;
@@ -31,16 +22,9 @@ const TodoInput = ({ existingTodo }: TodoInputProps) => {
     }
 
     try {
-      // if (existingTodo) {
-      //   // Update existing todo
-      //   await updateTodo(existingTodo._id, todoTitle); // Pass ID and title to update the todo
-      // } else {
       // Add new todo
-      await addTodo(todoTitle); // Call your addTodo function
-      // }
-
-      queryClient.invalidateQueries({ queryKey: ["todos"] }); // Refetch todos after adding or updating
-      reset();
+      addTodoMutation({ title: todoTitle });
+      reset(); // Reset the form after successful submission
       setError(null); // Clear the error
     } catch (err) {
       setError("Failed to submit todo. Please try again.");
@@ -53,7 +37,6 @@ const TodoInput = ({ existingTodo }: TodoInputProps) => {
         <Controller
           name="todoTitle"
           control={control}
-          defaultValue={existingTodo?.title || ""}
           render={({ field }) => (
             <div>
               <Input
@@ -65,9 +48,7 @@ const TodoInput = ({ existingTodo }: TodoInputProps) => {
             </div>
           )}
         />
-        <Button type="submit">
-          {existingTodo ? "Update Todo" : "Add Todo"}
-        </Button>
+        <Button type="submit">Add Todo</Button>
       </form>
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>

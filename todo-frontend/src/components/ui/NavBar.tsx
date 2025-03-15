@@ -1,5 +1,3 @@
-import React from "react";
-
 const NavBar = () => {
   return (
     <div className="w-full bg-black p-3 text-xl">

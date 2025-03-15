@@ -4,7 +4,8 @@ import Home from "./pages/Home";
 
 import Todos from "./pages/Todos";
 import { Login } from "./pages/Login";
-import { SignUp } from "./pages/Signup";
+import { SignUp } from "./pages/SignUp";
+
 function App() {
   return (
     <Routes>
