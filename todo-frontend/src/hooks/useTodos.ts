@@ -8,7 +8,7 @@ export const useTodos = () => {
 
 // export const useAddTodo = () => {
 //   const queryClient = useQueryClient();
-//   return useMutation<Todo,Error,>(addTodo, {
+//   return useMutation(addTodo, {
 //     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
 //   });
 // };

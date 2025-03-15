@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "poppins"; /* Choose a name for your font */
-  src: url("/BigShouldersStencil_24pt-Regular.ttf") format("truetype"); /* Adjust path */
-  font-weight: normal;
-  font-style: normal;
-}
-
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
@@ -132,8 +125,7 @@
 
 @font-face {
   font-family: "poppins"; /* Choose a name for your font */
-  src: url("todo-frontend/public/BigShouldersStencil_24pt-Regular.ttf")
-    format("truetype"); /* Adjust path */
+  src: url("/BigShouldersStencil_24pt-Regular.ttf") format("truetype"); /* Adjust path */
   font-weight: normal;
   font-style: normal;
 }

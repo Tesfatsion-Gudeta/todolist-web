@@ -1,15 +1,15 @@
 import { Todo } from "@/types/todo";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
-const API_URL = "";
+const API_URL = "/todos";
 
 export const getTodos = async () => {
   //define the type of the data returned
-  const { data } = await axios.get<Todo[]>(API_URL);
+  const { data } = await axiosInstance.get<Todo[]>(API_URL);
   return data;
 };
 export const addTodo = async (title: string) => {
-  const { data } = await axios.post<Todo>(API_URL, { title });
+  const { data } = await axiosInstance.post<Todo>(API_URL, { title });
   return data;
 };
 export const updateTodo = async () => {};
