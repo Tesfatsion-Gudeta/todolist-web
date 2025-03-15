@@ -8,7 +8,7 @@ const todoSchema = new mongoose.Schema(
     },
     isCompleted: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId, //foriegn key

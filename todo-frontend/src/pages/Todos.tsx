@@ -1,22 +1,21 @@
-import { Button } from "@/components/ui/button";
-import NavBar from "@/components/ui/NavBar";
 import TodoCard from "@/components/TodoCard";
-import { Plus } from "lucide-react";
+import TodoInput from "@/components/TodoInput";
+import NavBar from "@/components/ui/NavBar";
 import { useTodos } from "@/hooks/useTodos";
 
 const Todos = () => {
-  const { data } = useTodos();
-  const handleAddTodo = () => {};
+  const { data, isLoading, error } = useTodos();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>{error.message}</p>;
+
   return (
     <div className="flex flex-col font-sans">
       <NavBar />
-      <div className="p-4">
-        <Button className="rounded-xl" onClick={handleAddTodo}>
-          <Plus /> Add Task
-        </Button>
-      </div>
+      <TodoInput />
+
       {data?.map((todo) => (
-        <TodoCard key={todo._id} todo={todo.title} />
+        <TodoCard key={todo._id} todo={todo} />
       ))}
     </div>
   );
