@@ -1,4 +1,4 @@
-import { addTodo, getTodos } from "@/api/todoApi";
+import { addTodo, getTodos, updateTodo } from "@/api/todoApi";
 import { Todo } from "@/types/todo";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -24,6 +24,21 @@ export const useAddTodo = () => {
     },
     onError: (error) => {
       console.error("Error adding todo:", error);
+    },
+  });
+};
+
+//update
+export const useUpdateTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Todo, Error, { id: string; title: string }>({
+    mutationFn: updateTodo,
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["todos", variables.id] });
+    },
+    onError(error) {
+      console.error("Error updating todo: ", error);
     },
   });
 };

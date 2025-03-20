@@ -3,6 +3,7 @@ import { Checkbox } from "./ui/checkbox"; // Assuming this is the ShadCN Checkbo
 import { Trash } from "lucide-react";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { Todo } from "@/types/todo"; // Assuming Todo type is defined in your project
+import { useUpdateTodo } from "@/hooks/useTodos";
 
 type Props = {
   todo: Todo; // Use the Todo type here
@@ -10,6 +11,7 @@ type Props = {
 
 const TodoCard = ({ todo }: Props) => {
   const [isChecked, setIsChecked] = useState(todo.isCompleted || false); // Initialize with isCompleted or false if undefined
+  const { mutate: updateTodo } = useUpdateTodo();
 
   useEffect(() => {
     setIsChecked(todo.isCompleted || false); // Sync with backend
@@ -20,8 +22,8 @@ const TodoCard = ({ todo }: Props) => {
     setIsChecked(completed);
 
     try {
-      // Update the isCompleted field in the backend
-      // await updateTodoCompletion(todo._id, completed);
+      // Call the mutation to update the todo completion status
+      await updateTodo({ id: todo._id, title: todo.title }); // Pass the todo id and title
     } catch (error) {
       console.error("Failed to update todo completion:", error);
     }

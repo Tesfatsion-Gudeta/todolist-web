@@ -14,14 +14,14 @@ exports.getAllTodos = async (req, res) => {
 
 exports.postTodo = async (req, res) => {
   try {
-    const { title, isCompleted } = req.body;
+    const { title } = req.body;
     const userId = req.userId;
 
     if (!title) {
       return res.status(400).json({ message: "Todo text is required" });
     }
 
-    const todo = await Todo.create({ title, isCompleted, userId });
+    const todo = await Todo.create({ title, userId });
     res.json({ message: "todo successfully created.", todo });
   } catch (error) {
     res
@@ -53,6 +53,24 @@ exports.updateTodo = async (req, res) => {
   }
 };
 
-exports.deleteTodo = async (req, res) => {};
+exports.deleteTodo = async (req, res) => {
+  const { id } = req.params;
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ message: "Invalid todo ID" });
+  }
+
+  try {
+    const todo = await Todo.findOneAndDelete({ _id: id, userId: req.userId });
+    if (!todo)
+      return res
+        .status(404)
+        .json({ message: "Todo not found or unauthorized access" });
+    res.json({ message: "Todo deleted successfully", todo });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error deleting todo", error: error.message });
+  }
+};
 
 exports.getTodo = async (req, res) => {};
