@@ -7,7 +7,7 @@ const todoRoutes = require("./routes/todo-routes");
 const userRoutes = require("./routes/user-routes");
 
 require("dotenv").config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 connectDB();
 //middlewares

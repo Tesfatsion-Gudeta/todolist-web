@@ -29,13 +29,16 @@ export const addTodo = async ({ title }: { title: string }) => {
 export const updateTodo = async ({
   id,
   title,
+  isCompleted,
 }: {
   id: string;
   title: string;
+  isCompleted: boolean;
 }) => {
   try {
     const { data } = await axiosInstance.put<Todo>(`${API_URL}/${id}`, {
       title,
+      isCompleted,
     });
     return data;
   } catch (error) {

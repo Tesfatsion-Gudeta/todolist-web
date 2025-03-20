@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axiosInstance from "@/utils/axiosInstance";
 
 // Define schema using Zod
 const formSchema = z.object({
@@ -42,7 +43,7 @@ export function SignUp() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setErrorMessage(null);
     try {
-      await axios.post("http://localhost:5000/api/user/signup", data);
+      await axiosInstance.post("/user/signup", data);
       navigate("/login"); // Redirect to login page on success
     } catch (err: any) {
       setErrorMessage(

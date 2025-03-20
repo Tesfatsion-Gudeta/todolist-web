@@ -32,7 +32,11 @@ export const useAddTodo = () => {
 export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Todo, Error, { id: string; title: string }>({
+  return useMutation<
+    Todo,
+    Error,
+    { id: string; title: string; isCompleted: boolean }
+  >({
     mutationFn: updateTodo,
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["todos", variables.id] });

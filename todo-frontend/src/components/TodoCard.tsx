@@ -23,7 +23,11 @@ const TodoCard = ({ todo }: Props) => {
 
     try {
       // Call the mutation to update the todo completion status
-      await updateTodo({ id: todo._id, title: todo.title }); // Pass the todo id and title
+      await updateTodo({
+        id: todo._id,
+        title: todo.title,
+        isCompleted: completed,
+      }); // Pass the todo id and title
     } catch (error) {
       console.error("Failed to update todo completion:", error);
     }

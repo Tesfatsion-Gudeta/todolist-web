@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axiosInstance from "@/utils/axiosInstance";
 
 // Define schema using Zod
 const formSchema = z.object({
@@ -40,10 +41,7 @@ export function Login() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setErrorMessage(null);
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/user/login",
-        data
-      );
+      const res = await axiosInstance.post("/user/login", data);
       localStorage.setItem("token", res.data.token);
       navigate("/Todos"); // Redirect to dashboard on success
     } catch (err: any) {
