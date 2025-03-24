@@ -24,8 +24,8 @@ const TodoInput = () => {
     try {
       // Add new todo
       addTodoMutation({ title: todoTitle });
-      reset(); // Reset the form after successful submission
-      setError(null); // Clear the error
+      reset({ todoTitle: "" });
+      setError(null);
     } catch (err) {
       setError("Failed to submit todo. Please try again.");
     }

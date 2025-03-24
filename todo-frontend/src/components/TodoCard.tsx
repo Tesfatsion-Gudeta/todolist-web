@@ -3,7 +3,7 @@ import { Checkbox } from "./ui/checkbox"; // Assuming this is the ShadCN Checkbo
 import { Trash } from "lucide-react";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { Todo } from "@/types/todo"; // Assuming Todo type is defined in your project
-import { useUpdateTodo } from "@/hooks/useTodos";
+import { useUpdateTodo, useDeleteTodo } from "@/hooks/useTodos"; // Import the useDeleteTodo hook
 
 type Props = {
   todo: Todo; // Use the Todo type here
@@ -12,6 +12,7 @@ type Props = {
 const TodoCard = ({ todo }: Props) => {
   const [isChecked, setIsChecked] = useState(todo.isCompleted || false); // Initialize with isCompleted or false if undefined
   const { mutate: updateTodo } = useUpdateTodo();
+  const { mutate: deleteTodoMutation } = useDeleteTodo(); // Use the delete mutation here
 
   useEffect(() => {
     setIsChecked(todo.isCompleted || false); // Sync with backend
@@ -33,10 +34,10 @@ const TodoCard = ({ todo }: Props) => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     try {
-      // Call your delete API function here
-      // await deleteTodo(todo._id);
+      // Use the deleteTodo mutation hook to delete the todo
+      deleteTodoMutation({ id: todo._id });
     } catch (error) {
       console.error("Failed to delete todo:", error);
     }

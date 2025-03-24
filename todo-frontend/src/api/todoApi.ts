@@ -48,7 +48,7 @@ export const updateTodo = async ({
 };
 
 // Delete a Todo
-export const deleteTodo = async (id: string) => {
+export const deleteTodo = async ({ id }: { id: string }) => {
   try {
     const { data } = await axiosInstance.delete(`${API_URL}/${id}`);
     return data;
