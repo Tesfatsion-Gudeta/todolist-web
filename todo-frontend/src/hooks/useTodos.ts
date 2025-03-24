@@ -63,7 +63,7 @@ export const useUpdateTodo = () => {
     },
     onError: (error, variables, context) => {
       // Rollback the optimistic update in case of error
-      queryClient.setQueryData(["todos"], context?.previousTodos);
+      queryClient.setQueryData(["todos", variables.id], context?.previousTodos);
       console.error("Error updating todo: ", error);
     },
     onSettled: () => {
