@@ -35,14 +35,40 @@ export const useUpdateTodo = () => {
   return useMutation<
     Todo,
     Error,
-    { id: string; title: string; isCompleted: boolean }
+    { id: string; title: string; isCompleted: boolean },
+    { previousTodos: Todo[] | undefined }
   >({
     mutationFn: updateTodo,
-    onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["todos", variables.id] });
+    onMutate: async (variables) => {
+      // Optimistically update the cache before the mutation is performed
+      await queryClient.cancelQueries({ queryKey: ["todos"] });
+
+      // Get the current todos from the cache
+      const previousTodos = queryClient.getQueryData<Todo[]>(["todos"]);
+
+      // Update the todo in the cache optimistically
+      queryClient.setQueryData<Todo[]>(["todos"], (oldTodos) =>
+        oldTodos?.map((todo) =>
+          todo._id === variables.id
+            ? {
+                ...todo,
+                title: variables.title,
+                isCompleted: variables.isCompleted,
+              }
+            : todo
+        )
+      );
+
+      return { previousTodos }; // Return the previous state to rollback in case of error
     },
-    onError(error) {
+    onError: (error, variables, context) => {
+      // Rollback the optimistic update in case of error
+      queryClient.setQueryData(["todos"], context?.previousTodos);
       console.error("Error updating todo: ", error);
+    },
+    onSettled: () => {
+      // Refetch the todos after the mutation is complete
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
   });
 };
