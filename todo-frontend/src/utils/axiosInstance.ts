@@ -1,8 +1,9 @@
 import axios from "axios";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 // Create an axios instance
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5001/api",
+  baseURL: apiUrl,
 });
 
 // to attach token to the header
