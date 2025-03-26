@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = process.env.REACT_APP_API_URL || "https://todo-backend-q658.onrender.com/api";
+const apiUrl = process.env.REACT_APP_API_URL || "https://todolist-web-eight.vercel.app/api";
 
 // Create an axios instance
 const axiosInstance = axios.create({
